@@ -67,7 +67,10 @@ const addAssignment = asyncHandler(async (req, res) => {
   //     throw new Error('User not found')
   // }
   // const url = req.protocol + "://" + req.get("host");
-  const imageData = await cloudinary.uploader.upload(req.body.question, {folder: "assignments"})
+
+  
+  const file = req.files.question
+  const imageData = await cloudinary.uploader.upload(file.tempFilePath, {folder: "assignments"}, (err, res) => console.log(err))
 
   const assignment = await Assignment.create({
     name: req.body.name,

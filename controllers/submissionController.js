@@ -67,7 +67,8 @@ const addSubmission = asyncHandler(async (req, res) => {
   // }
 
   // const url = req.protocol + "://" + req.get("host");
-  const imageData = await cloudinary.uploader.upload(req.body.answer, {folder: "submissions"})
+  const file = req.files.answer
+  const imageData = await cloudinary.uploader.upload(file.tempFilePath, {folder: "submissions"}, (err, res) => console.log(err))
 
   const submission = await Submission.create({
     name: req.body.name,

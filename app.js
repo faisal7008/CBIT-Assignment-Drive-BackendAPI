@@ -3,11 +3,17 @@ const connectDB = require('./config/db');
 var cors = require('cors');
 const dotenv = require('dotenv').config()
 const {errorHandler} = require('./middlewares/errorMiddleware')
+const fileUpload = require('express-fileupload')
 
 const app = express();
 
 // Connect Database
 connectDB();
+
+//file uploads
+app.use(fileUpload({
+    useTempFiles: true
+}))
 
 // cors
 app.use(cors({ origin: true, credentials: true }));
