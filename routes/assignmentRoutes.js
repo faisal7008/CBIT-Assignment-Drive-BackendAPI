@@ -11,9 +11,7 @@ router
   .route("/")
   .get(protect, getAssignments)
   .post(protect, addAssignment); //uploadQuestions.single('question'), 
-  // Route::get('/', function () {
-  //   //
-  //   })->middleware('first', 'second');
+
 // router
 //   .route("/:id")
 //   .delete(protect, deleteAssignment)

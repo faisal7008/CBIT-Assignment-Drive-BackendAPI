@@ -36,30 +36,30 @@ const getSubmissions = asyncHandler(async (req, res) => {
 // @access  Private
 
 const addAssignment = asyncHandler(async (req, res) => {
-  if (!req.body.name) {
-    res.status(400);
-    throw new Error("Please add assignment name");
-  }
-  if (!req.body.createdBy) {
-    res.status(400);
-    throw new Error("Please add creator name");
-  }
-  if (!req.body.course) {
-    res.status(400);
-    throw new Error("Please select course");
-  }
-  if (!req.body.totalmarks) {
-    res.status(400);
-    throw new Error("Please add total marks");
-  }
-  if (!req.body.duedate) {
-    res.status(400);
-    throw new Error("Please add duedate");
-  }
-  if (!req.file) {
-    res.status(400);
-    throw new Error("Please upload file");
-  }
+  // if (!req.body.name) {
+  //   res.status(400);
+  //   throw new Error("Please add assignment name");
+  // }
+  // if (!req.body.createdBy) {
+  //   res.status(400);
+  //   throw new Error("Please add creator name");
+  // }
+  // if (!req.body.course) {
+  //   res.status(400);
+  //   throw new Error("Please select course");
+  // }
+  // if (!req.body.totalmarks) {
+  //   res.status(400);
+  //   throw new Error("Please add total marks");
+  // }
+  // if (!req.body.duedate) {
+  //   res.status(400);
+  //   throw new Error("Please add duedate");
+  // }
+  // if (!req.file) {
+  //   res.status(400);
+  //   throw new Error("Please upload file");
+  // }
 
   // Check for user
   // if(!req.user){
