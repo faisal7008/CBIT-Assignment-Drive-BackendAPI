@@ -1,6 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const Assignment = require("../models/Assignments");
 const Submission = require("../models/Submissions");
+const cloudinary = require("../utils/cloudinary")
 
 // @desc    Get Submisssions
 // @route   GET /api/assignments
@@ -65,7 +66,8 @@ const addSubmission = asyncHandler(async (req, res) => {
   //     throw new Error('User not found')
   // }
 
-  const url = req.protocol + "://" + req.get("host");
+  // const url = req.protocol + "://" + req.get("host");
+  const imageData = await cloudinary.uploader.upload(req.body.answer, {folder: "submissions"})
 
   const submission = await Submission.create({
     name: req.body.name,
@@ -73,7 +75,7 @@ const addSubmission = asyncHandler(async (req, res) => {
     assignmentname: req.body.assignmentname,
     allotedmarks: "NA",
     feedback: "",
-    answer: url + "/uploads/student/" + req.file.filename,
+    answer: imageData.secure_url
   });
 
   await Assignment.updateOne({name: submission.assignmentname}, {$push: {submissions: submission._id}})
