@@ -1,0 +1,4 @@
+{
+    "mongoURI": "mongodb+srv://faisal:faisal123@cluster0.qmkv6fn.mongodb.net/?retryWrites=true&w=majority",
+    "offineURL": "mongodb://localhost:27017/engagement-platform"
+}
