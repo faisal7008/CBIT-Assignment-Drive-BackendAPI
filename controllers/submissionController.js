@@ -1,6 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const Assignment = require("../models/Assignment");
 const Submission = require("../models/Submission");
+const cloudinary = require("../utils/cloudinary")
 
 // @desc    Get Submisssions
 // @route   GET /api/assignments
@@ -65,7 +66,9 @@ const addSubmission = asyncHandler(async (req, res) => {
   //     throw new Error('User not found')
   // }
 
-  const url = req.protocol + "://" + req.get("host");
+  // const url = req.protocol + "://" + req.get("host");
+  const file = req.files.answer
+  const imageData = await cloudinary.uploader.upload(file.tempFilePath, {folder: "submissions"}, (err, res) => console.log(err))
 
   const submission = await Submission.create({
     stud_name: req.body.stud_name,
@@ -73,7 +76,8 @@ const addSubmission = asyncHandler(async (req, res) => {
     assignment_id: req.body.assignment_id,
     alloted_marks: "NA",
     feedback: "",
-    answer: url + "/uploads/student/" + req.file.filename,
+    answer: imageData.secure_url
+    // answer: url + "/uploads/student/" + req.file.filename,
   });
 
   await Assignment.findByIdAndUpdate(submission.assignment_id, {$push: {submissions: submission._id}}, {new: true})
@@ -95,6 +99,12 @@ const updateSubmission = asyncHandler(
           res.status(401)
           throw new Error('User not found')
       }
+
+
+      const file = req.files.answer
+      const imageData = await cloudinary.uploader.upload(file.tempFilePath, {folder: "submissions"}, (err, res) => console.log(err))
+
+      req.body.answer = imageData.secure_url
 
       const updatedSubmission = await Submission.findByIdAndUpdate(req.params.id, req.body, {
           new: true,

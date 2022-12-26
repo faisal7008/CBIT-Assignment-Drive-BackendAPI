@@ -1,6 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const Assignment = require("../models/Assignment");
 const Submission = require("../models/Submission");
+const cloudinary = require("../utils/cloudinary")
 // const Student = require("../models/Student");
 // const Submission = require("../models/Assignments");
 
@@ -69,7 +70,9 @@ const addAssignment = asyncHandler(async (req, res) => {
   //     res.status(401)
   //     throw new Error('User not found')
   // }
-  const url = req.protocol + "://" + req.get("host");
+  // const url = req.protocol + "://" + req.get("host");
+  const file = req.files.question
+  const imageData = await cloudinary.uploader.upload(file.tempFilePath, {folder: "assignments"}, (err, res) => console.log(err))
 
   const assignment = await Assignment.create({
     name: req.body.name,
@@ -78,7 +81,8 @@ const addAssignment = asyncHandler(async (req, res) => {
     classId: req.body.classId,
     totalmarks: req.body.totalmarks,
     duedate: req.body.duedate,
-    question: url + "/uploads/teacher/" + req.file.filename,
+    question: imageData.secure_url,
+    // question: url + "/uploads/teacher/" + req.file.filename,
   });
 
   res.status(200).json(assignment);
