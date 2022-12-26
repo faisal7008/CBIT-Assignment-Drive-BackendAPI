@@ -25,12 +25,14 @@ app.use(express.urlencoded({ extended: true }));
 // routes
 const users = require('./routes/userRoutes');
 const courses = require('./routes/courseRoutes');
+const classes = require('./routes/classRoutes');
 const assignments = require('./routes/assignmentRoutes');
 const submissions = require('./routes/submissionRoutes');
 
 // use Routes
 app.use('/api/courses', courses);
 app.use('/api/users', users);
+app.use('/api/classes', classes);
 app.use('/api/assignments', assignments);
 app.use('/api/submissions', submissions);
 app.use('/uploads/teacher', express.static('uploads/teacher'))

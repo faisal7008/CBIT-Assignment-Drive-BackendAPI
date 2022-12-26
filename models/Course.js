@@ -9,10 +9,13 @@ const CourseSchema = new mongoose.Schema({
   semester: {
     type: Number,
     required: [true, 'Please add semester number']
-  }
+  },
+  lecturers: [{
+    type: String,
+  }]
 }, 
 {
   timestamps: true
 });
 
-module.exports = Course = mongoose.model('courses', CourseSchema);
+module.exports = Course = mongoose.model('course', CourseSchema);

@@ -12,7 +12,7 @@ const {uploadAnswers}  = require("../middlewares/uploadMiddleware");
 router
   .route("/")
   .get(protect, getSubmissions)
-  .post(protect, addSubmission); //uploadAnswers.single('answer'), 
+  .post(uploadAnswers.single('answer'), protect, addSubmission);
   // Route::get('/', function () {
   //   //
   //   })->middleware('first', 'second');

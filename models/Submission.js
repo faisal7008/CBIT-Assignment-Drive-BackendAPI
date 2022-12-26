@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const SubmissionSchema = new mongoose.Schema({
-  name: {
+  stud_name: {
     type: String,
     required: [true, 'Please add student name']
   },
@@ -9,15 +9,15 @@ const SubmissionSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Please add student roll no']
   },
-  assignmentname: {
+  assignment_id: {
     type: String,
-    required: [true, 'Please add assignment name']
+    required: [true, 'Please add assignment id']
   },
   answer: {
     type: String,
     required: [true, "Please add assignment questions"]
   },
-  allotedmarks: {
+  alloted_marks: {
     type: String,
   },
   feedback: {

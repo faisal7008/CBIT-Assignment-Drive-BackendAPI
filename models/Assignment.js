@@ -13,7 +13,13 @@ const AssignmentSchema = new mongoose.Schema(
     },
     course: {
       type: String,
-      required: [true, "Please select your course"],
+      required: [true, "Please select your course id"],
+      ref: 'course'
+    },
+    classId: {
+      type: String,
+      required: [true, "Please select your course id"],
+      ref: 'class'
     },
     totalmarks: {
       type: Number,

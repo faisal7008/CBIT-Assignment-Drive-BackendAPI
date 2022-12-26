@@ -8,7 +8,7 @@ const User = require('../models/User')
 // @access  Public
 
 const registerUser = asyncHandler( async (req, res) => {
-    const {name, id_no, email, role, password} = req.body
+    const {name, id_no, email, class_id, isMentor, role, password} = req.body
     if(!name || !id_no || !email || !role || !password){
         res.status(400)
         throw new Error('Please enter all fields')
@@ -31,6 +31,8 @@ const registerUser = asyncHandler( async (req, res) => {
         name,
         id_no,
         email,
+        class_id,
+        isMentor,
         role,
         password: hashedPassword
     })
@@ -42,6 +44,7 @@ const registerUser = asyncHandler( async (req, res) => {
             id_no: user.id_no,
             email: user.email,
             role: user.role,
+            isMentor: user.isMentor,
             token: generateToken(user._id)
         })
     }
@@ -68,6 +71,7 @@ const loginUser = asyncHandler( async (req, res) => {
             id_no: user.id_no,
             email: user.email,
             role: user.role,
+            isMentor: user.isMentor,
             token: generateToken(user._id)
         })
     }
@@ -87,12 +91,6 @@ const updateUser = asyncHandler(
         if(!user){
             res.status(400)
             throw new Error('User not found')
-        }
-
-        // Check for user
-        if(!req.user){
-            res.status(401)
-            throw new Error('Not Authenticated')
         }
 
          // Hash password
@@ -167,7 +165,7 @@ const getMe = asyncHandler( async (req, res) => {
 
 const generateToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_SECRET, {
-        expiresIn: '30d',
+        expiresIn: '24h',
     })
 }
 

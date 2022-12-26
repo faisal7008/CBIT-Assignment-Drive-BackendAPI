@@ -9,6 +9,10 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Please add ID number'],
   },
+  class_id:[{
+    type: String,
+    // required: [true, 'Please add the classes you belong to']
+  }],
   email: {
     type: String,
     required: [true, 'Please add a email'],
@@ -17,6 +21,10 @@ const UserSchema = new mongoose.Schema({
   role: {
     type: String,
     required: [true, 'Please specify a role']
+  },
+  isMentor: {
+    type: Boolean,
+    default: false
   },
   password: {
     type: String,

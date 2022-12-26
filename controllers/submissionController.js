@@ -1,7 +1,6 @@
 const asyncHandler = require("express-async-handler");
-const Assignment = require("../models/Assignments");
-const Submission = require("../models/Submissions");
-const cloudinary = require("../utils/cloudinary")
+const Assignment = require("../models/Assignment");
+const Submission = require("../models/Submission");
 
 // @desc    Get Submisssions
 // @route   GET /api/assignments
@@ -35,7 +34,7 @@ const getSubmissions = asyncHandler(async (req, res) => {
 // @access  Private
 
 const addSubmission = asyncHandler(async (req, res) => {
-  if (!req.body.name) {
+  if (!req.body.stud_name) {
     res.status(400);
     throw new Error("Please add name");
   }
@@ -45,7 +44,7 @@ const addSubmission = asyncHandler(async (req, res) => {
     throw new Error("Please add rollno");
   }
 
-  if (!req.body.assignmentname) {
+  if (!req.body.assignment_id) {
     res.status(400);
     throw new Error("Please add assignment name");
   }
@@ -66,20 +65,18 @@ const addSubmission = asyncHandler(async (req, res) => {
   //     throw new Error('User not found')
   // }
 
-  // const url = req.protocol + "://" + req.get("host");
-  const file = req.files.answer
-  const imageData = await cloudinary.uploader.upload(file.tempFilePath, {folder: "submissions"}, (err, res) => console.log(err))
+  const url = req.protocol + "://" + req.get("host");
 
   const submission = await Submission.create({
-    name: req.body.name,
+    stud_name: req.body.stud_name,
     rollno: req.body.rollno,
-    assignmentname: req.body.assignmentname,
-    allotedmarks: "NA",
+    assignment_id: req.body.assignment_id,
+    alloted_marks: "NA",
     feedback: "",
-    answer: imageData.secure_url
+    answer: url + "/uploads/student/" + req.file.filename,
   });
 
-  await Assignment.updateOne({name: submission.assignmentname}, {$push: {submissions: submission._id}})
+  await Assignment.findByIdAndUpdate(submission.assignment_id, {$push: {submissions: submission._id}}, {new: true})
     .then(p => res.status(200).json({submission}))
     .catch(err => res.status(200).json(err))
   // res.status(200).json(submission);
@@ -122,7 +119,7 @@ const deleteSubmission = asyncHandler(
           throw new Error('User not found')
       }
 
-      await Assignment.findOneAndUpdate({name: submission.assignmentname}, {$pull: {submissions: submission._id}}, {new: true})
+      await Assignment.findByIdAndUpdate(submission.assignment_id, {$pull: {submissions: submission._id}}, {new: true})
     .then(p => res.json({ id: req.params.id }))
     .catch(err => res.json(err))
 
