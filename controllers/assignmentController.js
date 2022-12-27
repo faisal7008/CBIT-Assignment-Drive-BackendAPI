@@ -60,10 +60,10 @@ const addAssignment = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error("Please add duedate");
   }
-  if (!req.file) {
-    res.status(400);
-    throw new Error("Please upload file");
-  }
+  // if (!req.file) {
+  //   res.status(400);
+  //   throw new Error("Please upload file");
+  // }
 
   // Check for user
   // if(!req.user){

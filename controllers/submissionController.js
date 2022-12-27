@@ -50,10 +50,10 @@ const addSubmission = asyncHandler(async (req, res) => {
     throw new Error("Please add assignment name");
   }
 
-  if (!req.file) {
-    res.status(400);
-    throw new Error("Please upload assignment");
-  }
+  // if (!req.file) {
+  //   res.status(400);
+  //   throw new Error("Please upload assignment");
+  // }
 
   // if (!req.body.allotedMarks) {
   //   res.status(400);
