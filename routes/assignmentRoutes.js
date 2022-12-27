@@ -10,13 +10,7 @@ const {uploadQuestions}  = require("../middlewares/uploadMiddleware");
 router
   .route("/")
   .get(protect, getAssignments)
-  .post(uploadQuestions.single('question'), addAssignment);
-  // Route::get('/', function () {
-  //   //
-  //   })->middleware('first', 'second');
-// router
-//   .route("/:id")
-//   .delete(protect, deleteAssignment)
-//   .put(protect, updateAssignment);
+  .post(protect, addAssignment); //uploadQuestions.single('question')
+
 
 module.exports = router;
