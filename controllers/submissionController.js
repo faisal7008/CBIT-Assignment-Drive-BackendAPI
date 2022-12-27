@@ -67,8 +67,8 @@ const addSubmission = asyncHandler(async (req, res) => {
   // }
 
   // const url = req.protocol + "://" + req.get("host");
-  const file = req.files.answer
-  const imageData = await cloudinary.uploader.upload(file.tempFilePath, {folder: "submissions"}, (err, res) => console.log(err))
+  const file = req.body.answer
+  const imageData = await cloudinary.uploader.upload(file, {upload_preset: "submissions"}, (err, res) => console.log(err))
 
   const submission = await Submission.create({
     stud_name: req.body.stud_name,
@@ -101,8 +101,8 @@ const updateSubmission = asyncHandler(
       }
 
 
-      const file = req.files.answer
-      const imageData = await cloudinary.uploader.upload(file.tempFilePath, {folder: "submissions"}, (err, res) => console.log(err))
+      const file = req.body.answer
+  const imageData = await cloudinary.uploader.upload(file, {upload_preset: "submissions"}, (err, res) => console.log(err))
 
       req.body.answer = imageData.secure_url
 

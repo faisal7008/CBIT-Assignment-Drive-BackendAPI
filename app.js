@@ -10,11 +10,6 @@ const app = express();
 // Connect Database
 connectDB();
 
-//file uploads
-app.use(fileUpload({
-    useTempFiles: true
-}))
-
 // cors
 app.use(cors({ origin: true, credentials: true }));
 
